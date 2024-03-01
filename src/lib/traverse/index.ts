@@ -31,5 +31,5 @@ export const traverse = ({ n, steps }: TraverseInput) => {
 
 export type Traversal = ReturnType<typeof traverse>;
 
-// export const name_traversal = ({ n, steps }: TraverseInput) =>
-// 	`${n}_${steps.map((s) => s % n).join('-')}`;
+export const name_traversal = ({ n, steps }: TraverseInput) =>
+	`${n}_${steps.map((s) => s % n).join('-')}`;

@@ -1,12 +1,15 @@
 <script lang="ts">
+	import Download from '$lib/components/Download.svelte';
 	import Cytoscape from '$lib/components/cytoscape.svelte';
 	import { CYTOSCAPE } from '$lib/const/cytoscape';
-	import { traverse } from '$lib/traverse';
+	import { name_traversal, traverse } from '$lib/traverse';
 	import { random } from '$lib/traverse/random.js';
 	import { schema } from '$lib/traverse/schema.js';
+	import type cytoscape from 'cytoscape';
 
 	export let data;
 
+	let cy: cytoscape.Core;
 	let restart = false;
 
 	const on_change_steps = (
@@ -95,8 +98,14 @@
 	<button class="btn btn-sm btn-primary" on:click={() => (restart = true)}>Restart</button>
 
 	<button class="btn btn-sm btn-primary" on:click={copy_link}>Copy Link</button>
+
+	<Download
+		label="Download PNG"
+		filename={name_traversal(data) + '.png'}
+		get_data={() => cy?.png()}
+	/>
 </div>
 
 {#key data || restart}
-	<Cytoscape input={data} traversal={traverse(data)} />
+	<Cytoscape input={data} traversal={traverse(data)} bind:cy />
 {/key}

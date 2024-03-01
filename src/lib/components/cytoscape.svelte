@@ -6,6 +6,7 @@
 	import cytoscape from 'cytoscape';
 	import { onMount } from 'svelte';
 
+	export let cy: cytoscape.Core;
 	export let traversal: Traversal;
 	export let input: TraverseInput;
 
@@ -13,7 +14,7 @@
 	const { n, path } = traversal;
 
 	onMount(async () => {
-		const cy = cytoscape({
+		cy = cytoscape({
 			container: document.getElementById('cy'),
 
 			elements: range(n).map((n) => ({
