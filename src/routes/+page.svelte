@@ -1,22 +1,41 @@
 <script lang="ts">
 	import Cytoscape from '$lib/components/cytoscape.svelte';
-	import { traverse, type TraverseInput } from '$lib/traverse';
-	import { range } from '$lib/utils/array';
-	import { random_int } from '$lib/utils/random';
+	import { traverse } from '$lib/traverse';
+	import { random } from '$lib/traverse/random.js';
+	import { schema } from '$lib/traverse/schema.js';
 
-	const input: TraverseInput = {
-		n: 10,
-		skips: [1, 3, 0]
-	};
-
-	let delay_ms = 500;
-
-	const randomise = () => {
-		input.n = random_int(1, 75);
-		input.skips = range(random_int(1, 10)).map(() => random_int(0, input.n - 1));
-	};
+	export let data;
 
 	let restart = false;
+
+	const on_change_skips = (
+		e: Event & {
+			currentTarget: EventTarget & HTMLInputElement;
+		}
+	) => {
+		const parsed = schema.skips.safeParse(e.currentTarget.value);
+
+		if (!parsed.success) {
+			alert(parsed.error.message);
+		} else {
+			data.skips = parsed.data;
+		}
+	};
+
+	const randomise = () => {
+		data.n = random.n();
+		data.skips = random.skips(data.n);
+	};
+
+	const copy_link = () => {
+		const url = new URL(window.location.href);
+
+		url.searchParams.set('n', data.n.toString());
+		url.searchParams.set('skips', data.skips.join(','));
+		url.searchParams.set('delay_ms', data.delay_ms.toString());
+
+		navigator.clipboard.writeText(url.toString());
+	};
 
 	$: if (restart) {
 		restart = false;
@@ -26,38 +45,26 @@
 <div class="flex flex-col">
 	<label>
 		<span>Number of nodes</span>
-		<input type="number" min={1} max={100} bind:value={input.n} />
+		<input type="number" min={1} max={100} bind:value={data.n} />
 	</label>
 
 	<label>
 		<span>Skips</span>
-
-		<input
-			type="text"
-			value={input.skips.join(', ')}
-			on:change={(e) => {
-				const skips = e.currentTarget.value.split(',').map((s) => parseInt(s.trim()));
-				if (skips.length === 0) {
-					alert("Invalid input, skips can't be empty");
-				} else if (skips.some((s) => Number.isNaN(s))) {
-					alert('Invalid input, skips must be numbers');
-				} else {
-					input.skips = skips;
-				}
-			}}
-		/>
+		<input type="text" value={data.skips.join(', ')} on:change={on_change_skips} />
 	</label>
 
 	<label>
 		<span>Delay (ms)</span>
-		<input type="number" min={0} max={10_000} bind:value={delay_ms} />
+		<input type="number" min={0} max={10_000} bind:value={data.delay_ms} />
 	</label>
 
 	<button on:click={randomise}>Randomise</button>
 
 	<button on:click={() => (restart = true)}>Restart</button>
+
+	<button on:click={copy_link}>Copy Link</button>
 </div>
 
-{#key input || restart}
-	<Cytoscape {delay_ms} traversal={traverse(input)} />
+{#key data || restart}
+	<Cytoscape delay_ms={data.delay_ms} traversal={traverse(data)} />
 {/key}
