@@ -62,7 +62,7 @@
 		<input
 			class="input input-bordered input-sm w-32"
 			type="text"
-			value={data.steps.join(', ')}
+			value={data.steps.map((s) => s % data.n).join(', ')}
 			on:change={on_change_steps}
 		/>
 	</label>

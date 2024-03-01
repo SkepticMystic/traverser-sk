@@ -14,7 +14,7 @@
 
 	onMount(async () => {
 		const cy = cytoscape({
-			container: document.getElementById('cy'), // container to render in
+			container: document.getElementById('cy'),
 
 			elements: range(n).map((n) => ({
 				data: {
@@ -23,7 +23,6 @@
 			})),
 
 			style: [
-				// the stylesheet for the graph
 				{
 					selector: 'node',
 					style: {
@@ -46,7 +45,8 @@
 				}
 			],
 			layout: {
-				name: 'circle'
+				name: 'circle',
+				clockwise: true
 			}
 		});
 
@@ -75,8 +75,10 @@
 	});
 </script>
 
-<div id="cy" style="margin: 0 auto; max-width: 100%; height: 70vh; border: 1px solid #000;"></div>
+<div
+	id="cy"
+	style="margin: 0 auto; max-width: 100%; border: 1px solid #ccc"
+	class="h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh]"
+></div>
 
-{#if done}
-	<p>Done</p>
-{/if}
+<p>{done ? 'Done' : 'Running...'}</p>

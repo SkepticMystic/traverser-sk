@@ -30,6 +30,7 @@ export const schema = z.object({
 				})
 				.min(1, 'steps must have at least one step')
 		)
+
 		.default(random.steps()),
 
 	delay_ms: z.coerce
@@ -39,7 +40,7 @@ export const schema = z.object({
 		.min(0, 'delay_ms must be a positive number')
 		.default(250),
 
-	curve_style: z.enum(CYTOSCAPE.CURVE_STYLES).default('haystack')
+	curve_style: z.enum(CYTOSCAPE.CURVE_STYLES).default('bezier')
 });
 
 export type TraverseInput = z.infer<typeof schema>;
