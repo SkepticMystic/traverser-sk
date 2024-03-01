@@ -43,10 +43,10 @@
 </script>
 
 <p class="text-lg">
-	Given <code>n</code> nodes, and a list of <code>steps</code> (comma-separated), start at node
-	<code>0</code>, take the first step, then the second, and so on. Only once you reach node
+	Given <code>n</code> nodes, and a list of <code>steps</code>, start at node
+	<code>0</code>, take the first step, then the second, and so on. Stop once you reach node
 	<code>0</code>
-	again, <em>on the last step in the list</em>, do you stop.
+	again, <em>on the last step in the list</em>.
 </p>
 
 <div class="flex gap-x-5 gap-y-3 items-center flex-wrap my-3">
