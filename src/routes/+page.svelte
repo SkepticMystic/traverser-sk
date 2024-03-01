@@ -8,30 +8,30 @@
 
 	let restart = false;
 
-	const on_change_skips = (
+	const on_change_steps = (
 		e: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
 		}
 	) => {
-		const parsed = schema.skips.safeParse(e.currentTarget.value);
+		const parsed = schema.steps.safeParse(e.currentTarget.value);
 
 		if (!parsed.success) {
 			alert(parsed.error.message);
 		} else {
-			data.skips = parsed.data;
+			data.steps = parsed.data;
 		}
 	};
 
 	const randomise = () => {
 		data.n = random.n();
-		data.skips = random.skips(data.n);
+		data.steps = random.steps(data.n);
 	};
 
 	const copy_link = () => {
 		const url = new URL(window.location.href);
 
 		url.searchParams.set('n', data.n.toString());
-		url.searchParams.set('skips', data.skips.join(','));
+		url.searchParams.set('steps', data.steps.join(','));
 		url.searchParams.set('delay_ms', data.delay_ms.toString());
 
 		navigator.clipboard.writeText(url.toString());
@@ -42,27 +42,45 @@
 	}
 </script>
 
-<div class="flex flex-col">
-	<label>
-		<span>Number of nodes</span>
-		<input type="number" min={1} max={100} bind:value={data.n} />
+<p class="text-lg">
+	Given <code>n</code> nodes, and a list of <code>steps</code> (comma-separated), start at node
+	<code>0</code>, take the first step, then the second, and so on. Only once you reach node
+	<code>0</code>
+	again, <em>on the last step in the list</em>, do you stop.
+</p>
+
+<div class="flex gap-x-5 gap-y-3 items-center flex-wrap my-3">
+	<label class="flex items-center gap-1">
+		<span>Nodes</span>
+		<input class="input input-bordered input-sm w-20" type="number" min={1} bind:value={data.n} />
 	</label>
 
-	<label>
-		<span>Skips</span>
-		<input type="text" value={data.skips.join(', ')} on:change={on_change_skips} />
+	<label class="flex items-center gap-1">
+		<span>Steps</span>
+		<input
+			class="input input-bordered input-sm w-32"
+			type="text"
+			value={data.steps.join(', ')}
+			on:change={on_change_steps}
+		/>
 	</label>
 
-	<label>
+	<label class="flex items-center gap-1">
 		<span>Delay (ms)</span>
-		<input type="number" min={0} max={10_000} bind:value={data.delay_ms} />
+		<input
+			class="input input-bordered input-sm w-24"
+			type="number"
+			min={0}
+			max={10_000}
+			bind:value={data.delay_ms}
+		/>
 	</label>
 
-	<button on:click={randomise}>Randomise</button>
+	<button class="btn btn-sm" on:click={randomise}>Randomise</button>
 
-	<button on:click={() => (restart = true)}>Restart</button>
+	<button class="btn btn-sm" on:click={() => (restart = true)}>Restart</button>
 
-	<button on:click={copy_link}>Copy Link</button>
+	<button class="btn btn-sm" on:click={copy_link}>Copy Link</button>
 </div>
 
 {#key data || restart}

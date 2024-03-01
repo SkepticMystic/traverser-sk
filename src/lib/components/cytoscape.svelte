@@ -28,8 +28,9 @@
 					style: {
 						'background-color': '#666',
 						label: 'data(id)',
-						width: 20,
-						height: 20
+						'font-size': '16px',
+						width: 15,
+						height: 15
 					}
 				},
 				{
@@ -73,7 +74,7 @@
 	});
 </script>
 
-<div id="cy" style="max-width: 100%; height: 85vh; border: 1px solid #000;"></div>
+<div id="cy" style="margin: 0 auto; max-width: 100%; height: 70vh; border: 1px solid #000;"></div>
 
 {#if done}
 	<p>Done</p>

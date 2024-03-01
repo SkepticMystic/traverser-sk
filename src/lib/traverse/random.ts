@@ -4,5 +4,5 @@ const int = (min: number, max: number) => Math.floor(Math.random() * (max - min 
 
 export const random = {
 	n: () => int(1, 25),
-	skips: (n?: number) => range(int(1, 4)).map(() => int(0, n ?? 20))
+	steps: (n?: number) => range(int(1, 4)).map(() => int(0, n ? n - 1 : 20))
 };

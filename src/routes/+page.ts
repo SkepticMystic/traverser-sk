@@ -7,9 +7,9 @@ import type { PageLoad } from './$types';
 export const load: PageLoad = ({ url }) => {
 	const input = z
 		.object({
-			delay_ms: schema.delay_ms.default(250),
 			n: schema.n.default(random.n()),
-			skips: schema.skips.default(random.skips())
+			delay_ms: schema.delay_ms.default(250),
+			steps: schema.steps.default(random.steps())
 		})
 		.safeParse(Object.fromEntries(url.searchParams.entries()));
 

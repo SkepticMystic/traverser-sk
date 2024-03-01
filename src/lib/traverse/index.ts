@@ -2,40 +2,40 @@ import { MAX_ITERATIONS } from '../const/index';
 
 export type TraverseInput = {
 	n: number;
-	skips: number[];
+	steps: number[];
 };
 
-export const traverse = ({ n, skips }: TraverseInput) => {
-	console.log('input:', { n, skips });
+export const traverse = ({ n, steps }: TraverseInput) => {
+	console.log('input:', { n, steps });
 
 	if (n < 1) {
 		throw new Error('n must be a positive integer');
-	} else if (skips.length === 0) {
-		throw new Error("skips can't be empty");
+	} else if (steps.length === 0) {
+		throw new Error("steps can't be empty");
 	}
 
 	let iter = 0,
-		skip_i = 0,
+		step_i = 0,
 		point = 0;
 
 	const path: number[] = [];
 
-	// Continue until getting back to the start, using the same skip
-	while (point !== 0 || skip_i !== 0 || path.length === 0) {
+	// Continue until getting back to the start, using the same step
+	while (point !== 0 || step_i !== 0 || path.length === 0) {
 		if (iter++ > MAX_ITERATIONS) {
 			throw new Error('Infinite loop detected');
 		}
 
 		path.push(point);
 
-		point = (point + skips[skip_i]) % n;
-		skip_i = (skip_i + 1) % skips.length;
+		point = (point + steps[step_i]) % n;
+		step_i = (step_i + 1) % steps.length;
 	}
 
-	return { n, skips, path };
+	return { n, steps, path };
 };
 
 export type Traversal = ReturnType<typeof traverse>;
 
-// export const name_traversal = ({ n, skips }: TraverseInput) =>
-// 	`${n}_${skips.map((s) => s % n).join('-')}`;
+// export const name_traversal = ({ n, steps }: TraverseInput) =>
+// 	`${n}_${steps.map((s) => s % n).join('-')}`;
