@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@vercel/analytics": "^1.2.2",
 		"cytoscape": "^3.28.1",
 		"zod": "^3.22.4"
 	}
