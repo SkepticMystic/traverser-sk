@@ -26,7 +26,7 @@
 				{
 					selector: 'node',
 					style: {
-						'background-color': '#666',
+						// 'background-color': '#666',
 						label: 'data(id)',
 						'font-size': '16px',
 						width: 15,
@@ -78,7 +78,7 @@
 <div
 	id="cy"
 	style="margin: 0 auto; max-width: 100%; border: 1px solid #ccc"
-	class="h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh]"
+	class="h-[50vh] sm:h-[60vh] md:h-[70vh]"
 ></div>
 
 <p>{done ? 'Done' : 'Running...'}</p>

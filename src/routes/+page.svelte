@@ -53,12 +53,12 @@
 
 <div class="flex gap-4 items-center flex-wrap my-3">
 	<label class="flex items-center gap-1">
-		<span>Nodes</span>
+		<span class="font-semibold">Nodes</span>
 		<input class="input input-bordered input-sm w-20" type="number" min={1} bind:value={data.n} />
 	</label>
 
 	<label class="flex items-center gap-1">
-		<span>Steps</span>
+		<span class="font-semibold">Steps</span>
 		<input
 			class="input input-bordered input-sm w-32"
 			type="text"
@@ -68,7 +68,7 @@
 	</label>
 
 	<label class="flex items-center gap-1">
-		<span>Delay (ms)</span>
+		<span class="font-semibold">Delay (ms)</span>
 		<input
 			class="input input-bordered input-sm w-24"
 			type="number"
@@ -79,7 +79,7 @@
 	</label>
 
 	<label class="flex items-center gap-1">
-		<span>Curve Style</span>
+		<span class="font-semibold">Curve Style</span>
 
 		<select class="select select-sm select-bordered" bind:value={data.curve_style}>
 			{#each CYTOSCAPE.CURVE_STYLES as style}
