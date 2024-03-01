@@ -11,6 +11,7 @@
 
 	let cy: cytoscape.Core;
 	let restart = false;
+	let copied = false;
 
 	const on_change_steps = (
 		e: Event & {
@@ -39,7 +40,10 @@
 		url.searchParams.set('curve_style', data.curve_style);
 		url.searchParams.set('delay_ms', data.delay_ms.toString());
 
-		navigator.clipboard.writeText(url.toString());
+		navigator.clipboard.writeText(url.toString()).then(() => {
+			copied = true;
+			setTimeout(() => (copied = false), 2000);
+		});
 	};
 
 	$: if (restart) {
@@ -97,7 +101,9 @@
 
 	<button class="btn btn-sm btn-primary" on:click={() => (restart = true)}>Restart</button>
 
-	<button class="btn btn-sm btn-primary" on:click={copy_link}>Copy Link</button>
+	<button class="btn btn-sm btn-primary" on:click={copy_link}>
+		{copied ? 'Copied!' : 'Copy Link'}
+	</button>
 
 	<Download
 		label="Download PNG"
