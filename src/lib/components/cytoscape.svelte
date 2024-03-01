@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { Traversal } from '$lib/traverse';
+	import type { TraverseInput } from '$lib/traverse/schema';
 	import { range } from '$lib/utils/array';
 	import { sleep } from '$lib/utils/promise';
 	import cytoscape from 'cytoscape';
 	import { onMount } from 'svelte';
 
 	export let traversal: Traversal;
-	export let delay_ms = 0;
+	export let input: TraverseInput;
 
 	let done = false;
 	const { n, path } = traversal;
@@ -39,8 +40,8 @@
 						width: 3,
 						'line-color': '#ccc',
 						'target-arrow-color': '#ccc',
-						'target-arrow-shape': 'triangle'
-						// TODO: Customisable curve-style
+						'target-arrow-shape': 'triangle',
+						'curve-style': input.curve_style
 					}
 				}
 			],
@@ -57,7 +58,7 @@
 				data: { id: crypto.randomUUID(), source, target }
 			});
 
-			if (delay_ms) await sleep(delay_ms);
+			if (input.delay_ms) await sleep(input.delay_ms);
 		}
 
 		// Close the loop

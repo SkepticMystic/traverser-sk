@@ -1,13 +1,7 @@
 import { MAX_ITERATIONS } from '../const/index';
-
-export type TraverseInput = {
-	n: number;
-	steps: number[];
-};
+import type { TraverseInput } from './schema';
 
 export const traverse = ({ n, steps }: TraverseInput) => {
-	console.log('input:', { n, steps });
-
 	if (n < 1) {
 		throw new Error('n must be a positive integer');
 	} else if (steps.length === 0) {

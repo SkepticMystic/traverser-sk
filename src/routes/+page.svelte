@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Cytoscape from '$lib/components/cytoscape.svelte';
+	import { CYTOSCAPE } from '$lib/const/cytoscape';
 	import { traverse } from '$lib/traverse';
 	import { random } from '$lib/traverse/random.js';
 	import { schema } from '$lib/traverse/schema.js';
@@ -13,7 +14,7 @@
 			currentTarget: EventTarget & HTMLInputElement;
 		}
 	) => {
-		const parsed = schema.steps.safeParse(e.currentTarget.value);
+		const parsed = schema.shape.steps.safeParse(e.currentTarget.value);
 
 		if (!parsed.success) {
 			alert(parsed.error.message);
@@ -32,6 +33,7 @@
 
 		url.searchParams.set('n', data.n.toString());
 		url.searchParams.set('steps', data.steps.join(','));
+		url.searchParams.set('curve_style', data.curve_style);
 		url.searchParams.set('delay_ms', data.delay_ms.toString());
 
 		navigator.clipboard.writeText(url.toString());
@@ -75,6 +77,16 @@
 			bind:value={data.delay_ms}
 		/>
 	</label>
+
+	<label class="flex items-center gap-1">
+		<span>Curve Style</span>
+
+		<select class="select select-sm select-bordered" bind:value={data.curve_style}>
+			{#each CYTOSCAPE.CURVE_STYLES as style}
+				<option value={style}>{style}</option>
+			{/each}
+		</select>
+	</label>
 </div>
 
 <div class="flex gap-3 items-center flex-wrap my-3">
@@ -86,5 +98,5 @@
 </div>
 
 {#key data || restart}
-	<Cytoscape delay_ms={data.delay_ms} traversal={traverse(data)} />
+	<Cytoscape input={data} traversal={traverse(data)} />
 {/key}
