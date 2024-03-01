@@ -49,7 +49,7 @@
 	again, <em>on the last step in the list</em>.
 </p>
 
-<div class="flex gap-x-5 gap-y-3 items-center flex-wrap my-3">
+<div class="flex gap-4 items-center flex-wrap my-3">
 	<label class="flex items-center gap-1">
 		<span>Nodes</span>
 		<input class="input input-bordered input-sm w-20" type="number" min={1} bind:value={data.n} />
@@ -75,12 +75,14 @@
 			bind:value={data.delay_ms}
 		/>
 	</label>
+</div>
 
-	<button class="btn btn-sm" on:click={randomise}>Randomise</button>
+<div class="flex gap-3 items-center flex-wrap my-3">
+	<button class="btn btn-sm btn-primary" on:click={randomise}>Randomise</button>
 
-	<button class="btn btn-sm" on:click={() => (restart = true)}>Restart</button>
+	<button class="btn btn-sm btn-primary" on:click={() => (restart = true)}>Restart</button>
 
-	<button class="btn btn-sm" on:click={copy_link}>Copy Link</button>
+	<button class="btn btn-sm btn-primary" on:click={copy_link}>Copy Link</button>
 </div>
 
 {#key data || restart}
